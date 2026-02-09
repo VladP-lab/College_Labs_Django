@@ -1,0 +1,10 @@
+<h1>{{ title }}</h1>
+<p>{{ content }}</p>
+
+<nav>
+    {% if page_type == 'home' %}
+        <a href="/other/">Перейти на іншу сторінку</a>
+    {% else %}
+        <a href="/">Повернутися на головну</a>
+    {% endif %}
+</nav>
