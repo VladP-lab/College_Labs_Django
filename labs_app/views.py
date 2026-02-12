@@ -11,7 +11,7 @@ def home(request):
 def other(request):
     context = {
         'title': 'Друга сторінка',
-        'content': 'Це контент іншої сторінки, переданий через контекст.',
-        'page_type': 'other'
+        'content': 'Це контент, переданий через контекст для іншої сторінки!',
+        'show_link': False
     }
     return render(request, 'labs_app/index.html', context)
