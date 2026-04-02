@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style>
+        header { background: #333; color: white; padding: 15px; }
+        nav a { color: white; margin-right: 15px; text-decoration: none; }
+        footer { background: #f1f1f1; padding: 20px; text-align: center; margin-top: 50px; }
+        .container { min-height: 400px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Python Guide 🐍</h2>
+        <nav>
+            <a href="{% url 'home' %}">Головна</a>
+            {% for cat in categories %}
+                <a href="?cat={{ cat.id }}">{{ cat.name }}</a>
+            {% endfor %}
+            <a href="{% url 'other' %}">Бібліотеки</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>© 2026 ТФК Луцьк | Студент: Влад | <a href="#">Контакти</a> | <a href="#">Про проєкт</a></p>
+    </footer>
+</body>
+</html>

@@ -1,17 +1,22 @@
 from django.shortcuts import render
+from .models import Topic, Category  # Додаємо імпорт моделей
 
 def home(request):
-    context = {
+    # Отримуємо всі теми та категорії для головної сторінки
+    topics = Topic.objects.all()
+    cats = Category.objects.all()
+    return render(request, 'labs_app/index.html', {
         'title': 'Головна сторінка',
-        'content': 'Вітаю на головній! Тут є посилання на інші розділи.',
-        'page_type': 'home'
-    }
-    return render(request, 'labs_app/index.html', context)
+        'topics': topics,
+        'categories': cats,  # Передаємо категорії для меню
+        'page': 'home'
+    })
 
 def other(request):
-    context = {
-        'title': 'Друга сторінка',
-        'content': 'Це контент, переданий через контекст для іншої сторінки!',
-        'show_link': False
-    }
-    return render(request, 'labs_app/index.html', context)
+    # Ця функція виправить AttributeError (image_21592e.png)
+    cats = Category.objects.all()
+    return render(request, 'labs_app/index.html', {
+        'title': 'Інша сторінка',
+        'categories': cats,
+        'page': 'other'
+    })
