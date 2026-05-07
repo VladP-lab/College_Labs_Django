@@ -1,0 +1,17 @@
+<!-- Додай це після опису товару у файлі topic_detail.html -->
+<div class="rating-section" style="margin-top: 20px; padding: 15px; background: #fff3cd; border-radius: 8px;">
+    <h3>Рейтинг курсу: ⭐ {{ avg_rating }} / 5.0</h3>
+    
+    <form method="POST" style="margin-top: 10px;">
+        {% csrf_token %}
+        {{ rating_form.as_p }}
+        <button type="submit" name="submit_rating" class="btn" style="background: #f39c12;">Оцінити</button>
+    </form>
+</div>
+
+<div class="buy-section" style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+    <p style="font-size: 24px; font-weight: bold; color: #2c3e50;">Ціна: {{ topic.price }} грн</p>
+    <a href="{% url 'add_to_cart' topic.id %}" class="btn" style="background: #27ae60; color: white; padding: 15px 30px; border-radius: 5px; font-size: 18px;">
+        Додати в кошик 🛒
+    </a>
+</div>

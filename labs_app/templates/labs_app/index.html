@@ -1,19 +1,23 @@
 {% extends 'labs_app/base.html' %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
-    
-    {% if topics %}
-        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-            {% for topic in topics %}
-                <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 250px;">
+    <h1 style="text-align: center; color: #333;">Головна сторінка</h1>
+    <div class="topics-grid">
+        {% for topic in topics %}
+            <div class="card">
+                {% if topic.image %}
+                    <img src="{{ topic.image.url }}" alt="{{ topic.title }}" class="card-img">
+                {% endif %}
+                <div class="card-body">
                     <h3>{{ topic.title }}</h3>
-                    <p>Категорія: <b>{{ topic.category.name }}</b></p>
-                    <small>Створено: {{ topic.created_at|date:"d.m.Y" }}</small>
+                    <p class="category-tag">Категорія: <strong>{{ topic.category.name }}</strong></p>
+                    <p class="description">{{ topic.short_description|truncatewords:15 }}</p>
+                    <div class="card-footer">
+                        <span class="price">{{ topic.price }} грн</span>
+                        <a href="{% url 'topic_detail' topic.id %}" class="btn">Детальніше</a>
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>У цій категорії поки немає елементів.</p>
-    {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

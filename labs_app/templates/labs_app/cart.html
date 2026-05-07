@@ -1,0 +1,42 @@
+{% extends 'labs_app/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Твій кошик 🛒</h1>
+    {% if cart_items %}
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background: #87529e; color: white;">
+                    <th style="padding: 10px;">Курс</th>
+                    <th style="padding: 10px;">Ціна</th>
+                    <th style="padding: 10px;">Кількість</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ item.topic.title }}</td>
+                    <td style="padding: 10px;">{{ item.topic.price }} грн</td>
+                    <td style="padding: 10px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <a href="{% url 'decrease_cart_item' item.topic.id %}" style="background: #e74c3c; color: white; text-decoration: none; padding: 2px 10px; border-radius: 4px; font-weight: bold;">-</a>
+
+        <span style="font-size: 1.1rem; font-weight: bold;">{{ item.quantity }}</span>
+
+        <a href="{% url 'add_to_cart' item.topic.id %}" style="background: #2ecc71; color: white; text-decoration: none; padding: 2px 10px; border-radius: 4px; font-weight: bold;">+</a>
+    </div>
+</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top: 20px; text-align: right;">
+            <h3>Разом до сплати: <span style="color: #87529e;">{{ total_price }} грн</span></h3>
+            <button class="btn" style="background: #27ae60; padding: 10px 20px;">Оформити замовлення</button>
+        </div>
+    {% else %}
+        <p>Твій кошик порожній. Час додати туди щось корисне!</p>
+        <a href="{% url 'home' %}">Повернутися до курсів</a>
+    {% endif %}
+</div>
+{% endblock %}

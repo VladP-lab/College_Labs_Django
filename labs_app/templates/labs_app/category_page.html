@@ -1,0 +1,13 @@
+{% extends 'labs_app/base.html' %}
+{% block content %}
+<h1>Розділ: {{ category.name }}</h1>
+<div class="grid">
+    {% for topic in topics %}
+        <div class="card">
+            <h3>{{ topic.title }}</h3>
+            <p>{{ topic.short_description }}</p>
+            <a href="{% url 'topic_detail' topic.id %}">Детальніше</a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,33 +1,80 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <style>
-        header { background: #333; color: white; padding: 15px; }
-        nav a { color: white; margin-right: 15px; text-decoration: none; }
-        footer { background: #f1f1f1; padding: 20px; text-align: center; margin-top: 50px; }
-        .container { min-height: 400px; padding: 20px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AceTec - Довідник</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+
     <header>
-        <h2>Python Guide 🐍</h2>
-        <nav>
-            <a href="{% url 'home' %}">Головна</a>
-            {% for cat in categories %}
-                <a href="?cat={{ cat.id }}">{{ cat.name }}</a>
-            {% endfor %}
-            <a href="{% url 'other' %}">Бібліотеки</a>
-        </nav>
+        <div class="header-container">
+            <div class="logo">AceTec</div>
+            <nav style="display: flex; align-items: center;">
+                <a href="{% url 'home' %}" class="nav-link">Головна</a>
+
+                <div class="dropdown">
+                    <span class="dropbtn nav-link">Категорії</span>
+                    <div class="dropdown-content">
+                        {% for cat in categories %}
+                            <a href="{% url 'category_page' cat.id %}">{{ cat.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <a href="{% url 'other' %}" class="nav-link">Бібліотеки</a>
+
+                <a href="{% url 'cart_detail' %}" class="nav-link" style="color: #e6d732; font-weight: bold; border: 1px solid #e6d732; padding: 5px 12px; border-radius: 5px; margin-left: 20px; text-decoration: none;">
+                    Кошик 🛒
+                </a>
+            </nav>
+        </div>
     </header>
 
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
 
     <footer>
-        <p>© 2026 ТФК Луцьк | Студент: Влад | <a href="#">Контакти</a> | <a href="#">Про проєкт</a></p>
+        <div class="footer-content">
+
+            <div class="footer-section about">
+                <h4 class="footer-logo">Ace<span>Tec</span></h4>
+                <p>Навчальний посібник з програмування для студентів ТФК Луцьк. Вивчаємо Django разом.</p>
+            </div>
+
+            <div class="footer-section links">
+                <h4>Навігація</h4>
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="{% url 'home' %}" style="text-decoration: none; color: #bdc3c7;">Головна</a></li>
+                    <li><a href="{% url 'other' %}" style="text-decoration: none; color: #bdc3c7;">Бібліотеки</a></li>
+                    <li><a href="/admin/" style="text-decoration: none; color: #bdc3c7;">Адмін-панель</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section contact">
+                <h4>Контакти</h4>
+                <p>Розробник: Попович Владислав</p>
+                <p>Email: vlad.popovych@example.com</p>
+            </div>
+
+            <div class="footer-section newsletter">
+                <h4>Підписка на новини</h4>
+                <form action="{% url 'subscribe_newsletter' %}" method="POST" style="display: flex; gap: 10px; margin-top: 10px;">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Ваш Email" required style="padding: 8px; border-radius: 4px; border: none; width: 100%;">
+                    <button type="submit" style="background: #e6d732; color: #333; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">ОК</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom" style="text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 20px;">
+            &copy; 2026 Попович Владислав. Усі права захищені.
+        </div>
     </footer>
+
 </body>
 </html>
